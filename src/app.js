@@ -18,8 +18,14 @@ app.get("/repositories", (request, response) => {
 app.post("/repositories", (request, response) => {
   const { title, url, techs } = request.body;
 
+  const id = uuid();
+
+  if (!isUuid(id)) {
+    return res.status(400).json({ error: 'Invalid project ID.' });
+  }
+
   const repository = {
-    id: uuid(),
+    id,
     title,
     url,
     techs,
